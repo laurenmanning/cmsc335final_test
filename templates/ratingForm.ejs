@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="styling.css" type="text/css">
+	<title>Rank That Pokemon!</title>
+</head>
+
+<body>
+	<h1> Select a Pokemon </h1>
+	<form action="http://localhost:5000/rating" method="post">
+
+		<fieldset>
+			<legend>Pokemon Select</legend>
+			<select name="name">
+				<%- items %>
+			</select>
+		</fieldset>
+
+		<fieldset>
+			<legend>Rating (1-5)</legend>
+			<input type="range" min="1" max="5" value="3" name="stars">
+		</fieldset>
+
+		<fieldset>
+			<legend>More Comments</legend>
+			<label><textarea rows="5" cols="80" name="comments"></textarea></label>
+		</fieldset>
+
+		<br>
+		<input type="reset">
+		<input type="submit" value="Submit Rating">
+	</form>
+	<hr>
+</body>
+
+</html>
