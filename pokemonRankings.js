@@ -10,6 +10,7 @@ const pokeLookup = require("./pokemonAPI.cjs");
 const htmlStyle = require("./htmlStylize.cjs");
 const dataBase = require("./databaseFunctions.cjs");
 const utils = require("./utils.js");
+const { info } = require("console");
 
 app.set("views", path.resolve(__dirname, "templates"));
 app.set("view engine", "ejs");
@@ -33,8 +34,10 @@ app.get("/browse/:pokemon", async (request, response) => {
     //get the comments for a pokemon + other info
     let pokeId = await pokeLookup.getIDFromName(name)
     if (pokeId > -1){
-        const pokemonInfo = utils.createInfoTable(name)
-        response.render("index");
+        const infoTable = await utils.createInfoTable(name)
+        const ratingsTable = await utils.getIndivComments(name)
+        const variables = {pokeName:name, infoTable:infoTable, ratingsTable:ratingsTable }
+        response.render("browseSpec", variables);
     } else {
         response.redirect("/viewratings")
     }

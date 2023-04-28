@@ -74,6 +74,9 @@ async function createInfoTable(name){
     const technicalInfo = await pokeLookup.getInfoFromName(name)
     const abilities = technicalInfo.abilities.map(x=>x.ability.name)
     const types = technicalInfo.types.map(x=>x.type.name)
+    let table = `<table><tr><th colspan='2'>${name} Types and Abilities</th></tr>`
+
+    return table
 
 }
 
@@ -82,6 +85,8 @@ async function getIndivComments(){
     if (allPokeEntries.length > 0){
         const totalScore = allPokeEntries.reduce((res, elem)=>(res + parseInt(elem.stars)), 0)
         const averageRating =  totalScore / allPokeEntries.length
+        let html = `Average Rating: ${averageRating}`;
+        return html
         
     }
 }
