@@ -13,4 +13,13 @@ function createRatingsTable(pokmeon){
     html_str += "</table>"
     return html_str;
 }
-module.exports = { createOptions, createRatingsTable }
+
+function createCommentsTable(comments) {
+    let html_str = "<table ><tr><th>Stars</th><th>Comment</th><tr>"
+    comments.forEach( x => {
+        html_str += `<tr><td>${x.stars}</td><td>${x.comments}</td></tr>` }
+         );
+    html_str += "</table>"
+    return html_str;
+}
+module.exports = { createOptions, createRatingsTable, createCommentsTable }

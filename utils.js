@@ -73,21 +73,38 @@ async function createRankingsList(){
 async function createInfoTable(name){
     const technicalInfo = await pokeLookup.getInfoFromName(name)
     const abilities = technicalInfo.abilities.map(x=>x.ability.name)
-    const types = technicalInfo.types.map(x=>x.type.name)
     let table = `<table><tr><th colspan='2'>${name} Types and Abilities</th></tr>`
+
+    const types = technicalInfo.types.map(x=>x.type.name)
+    table += `<tr><td rowspan=${types.length}>Types</td>`
+    table += `<td>${types[0]}</td></tr>`
+    types.slice(1).forEach( x => {
+        table += `<tr><td>${x}</td></tr>`
+    });
+
+    table += `<tr><td rowspan=${abilities.length}>Abilites</td>`
+    table += `<td>${abilities[0]}</td></tr>`
+    abilities.slice(1).forEach( x => {
+        table += `<tr><td>${x}</td></tr>`
+    });
+
+    table += `</table>`
+
 
     return table
 
 }
 
-async function getIndivComments(){
+async function getIndivComments(name){
     const allPokeEntries = await dataBase.fetchNamePokemonDatabase(name)
     if (allPokeEntries.length > 0){
         const totalScore = allPokeEntries.reduce((res, elem)=>(res + parseInt(elem.stars)), 0)
         const averageRating =  totalScore / allPokeEntries.length
         let html = `Average Rating: ${averageRating}`;
+        allPokeEntries.sort( (x,y) => x.stars - y.stars)
+        console.log(allPokeEntries)
+        html += htmlStyle.createCommentsTable(allPokeEntries)
         return html
-        
     }
 }
 

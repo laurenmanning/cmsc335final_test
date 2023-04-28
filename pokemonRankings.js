@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const app = express();  /* app is a request handler function */
 const portNumber = 5000; /* port number used must be the same used in formGet.html */
 const mongoSanitize = require('express-mongo-sanitize');
+
 require("dotenv").config({ path: path.resolve(__dirname, 'credentialsDontPost/.env') })  
 const pokeLookup = require("./pokemonAPI.cjs");
 const htmlStyle = require("./htmlStylize.cjs");
@@ -43,7 +44,6 @@ app.get("/browse/:pokemon", async (request, response) => {
     }
 });
 
-
 app.get("/rating", async (request, response) => {
     const pokemonList = await pokeLookup.getAllPokemon();
     const pokemonOptions = htmlStyle.createOptions(pokemonList);
@@ -56,7 +56,6 @@ app.get("/viewratings", async (request, response) => {
     const variables = {addedMessage:"", ratingsTable:ratingsTable}
     response.render("viewratings", variables);
 });
-
 
 app.post("/rating", async (request, response) => {
     let {name, stars, comments} = request.body;
